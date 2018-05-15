@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.company.enroller.model.Meeting;
+import com.company.enroller.model.Participant;
 import com.company.enroller.persistence.MeetingService;
 
 
@@ -44,6 +45,29 @@ public class MeetingRestController {
 					HttpStatus.CONFLICT);
 		}
 		meetingService.addMeeting(meeting);
+		return new ResponseEntity<Meeting>(meeting, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<?> deleteMeeting(@PathVariable("id") long id) {
+		Meeting meeting = meetingService.findById(id);
+		if (meeting == null) {
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
+		}
+		meetingService.deleteMeeting(meeting);
+		return new ResponseEntity<Meeting>(meeting, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<?> updateMeeting(@PathVariable("id") long id, @RequestBody Meeting updatedMeeting) {
+		Meeting meeting = meetingService.findById(id);
+		if (meeting == null) {
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
+		}
+		meeting.setTitle(updatedMeeting.getTitle());
+		meeting.setDescription(updatedMeeting.getDescription());
+		meeting.setDate(updatedMeeting.getDate());
+		meetingService.updateMeeting(meeting);
 		return new ResponseEntity<Meeting>(meeting, HttpStatus.OK);
 	}
 
