@@ -42,7 +42,8 @@ public class MeetingService {
 	
 	public void updateMeeting(Meeting meeting) {
 		Transaction transaction = connector.getSession().beginTransaction();
-		connector.getSession().update(meeting);
+		connector.getSession().merge(meeting);
 		transaction.commit();		
 	}
+
 }
