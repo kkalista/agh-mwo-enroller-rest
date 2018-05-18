@@ -71,15 +71,15 @@ public class Meeting {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	
+
 	public void addParticipant(Participant participant) {
 		this.participants.add(participant);
 	}
-	
+
 	public void removeParticipant(Participant participant) {
 		this.participants.remove(participant);
 	}
-	
+
 	public Collection<Participant> getParticipants() {
 		return participants;
 	}
